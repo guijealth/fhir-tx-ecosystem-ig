@@ -3626,7 +3626,7 @@
     "name" : "exclude",
     "mode" : "general",
     "description" : "Tests for proper functioning of exclude",
-    "setup" : [ "exclude/codesystem-exclude.json", "exclude/valueset-exclude.json", "exclude/valueset-exclude-zero.json", "exclude/valueset-exclude-filter.json"],
+    "setup" : [ "exclude/codesystem-exclude.json", "exclude/valueset-exclude.json", "exclude/valueset-exclude-zero.json", "exclude/valueset-exclude-all.json", "exclude/valueset-exclude-filter.json"],
     "tests" : [
       {
         "name" : "exclude-1",
@@ -3648,6 +3648,62 @@
         "operation" : "expand",
         "request" : "exclude/exclude-expand-zero-request.json",
         "response" : "exclude/exclude-expand-zero-response.json"
+      },
+      {
+        "name" : "exclude-all",
+        "description" : "include and exclude all codes",
+        "operation" : "expand",
+        "request" : "exclude/exclude-expand-all-request.json",
+        "response" : "exclude/exclude-expand-all-response.json"
+      }
+    ]
+  },{
+    "name" : "search",
+    "mode" : "general",
+    "description" : "Tests for proper functioning of text search. Note what we're not interested in the implementation of the text search itself, so we only test very obvious results. We're just interested in testing support for the parameter",
+    "setup" : [ "search/codesystem-search.json", "search/valueset-search-all.json", "search/valueset-search-enum.json", "search/valueset-search-filter.json"],
+    "tests" : [
+      {
+        "name" : "search-all-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-all-yes-request.json",
+        "response" : "search/search-expand-all-yes-response.json"
+      },
+      {
+        "name" : "search-all-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-all-no-request.json",
+        "response" : "search/search-expand-all-no-response.json"
+      },
+      {
+        "name" : "search-filter-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-filter-yes-request.json",
+        "response" : "search/search-expand-filter-yes-response.json"
+      },
+      {
+        "name" : "search-filter-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-filter-no-request.json",
+        "response" : "search/search-expand-filter-no-response.json"
+      },
+      {
+        "name" : "search-enum-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-enum-yes-request.json",
+        "response" : "search/search-expand-enum-yes-response.json"
+      },
+      {
+        "name" : "search-enum-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-enum-no-request.json",
+        "response" : "search/search-expand-enum-no-response.json"
       }
     ]
   },{
