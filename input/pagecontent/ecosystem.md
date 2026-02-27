@@ -84,6 +84,12 @@ This file contains a list of terminology servers.
       "http://domain/*|1.0.0",
       "http://domain/*|1.*" 
     ],
+    "exclusions" : [ 
+      // a list of CodeSystems and ValueSets the server claims to be authoritative for (see below). Optional
+      "http://domain/*", // simple mask, * is a wildcard
+      "http://domain/*|1.0.0",
+      "http://domain/*|1.*" 
+    ],
     "fhirVersions" : [{ // list of actual endpoint by FHIR version
       "version" : "R4", // can be R(X)
       "url" : "http://server/endpoint" // actual FHIR endpoint of the server for that version
@@ -232,7 +238,9 @@ When the ```Accept``` header is ```application/json```, the return value is a JS
     "access_info" : "description" // provided if the server has some, for error messages
   }],
   "candidate" : [{
-    // same content as for authoritative
+    // same content as for authoritative, except that content will
+    // be reported, *if* provided by the server
+    "content": "not-present" | "example" | "fragment" | "complete" | "supplement"
   }]
 }
 ```

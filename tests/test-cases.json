@@ -2874,7 +2874,7 @@
     "setup" : ["big/codesystem-big.json", "big/codesystem-not-so-big.json", "big/valueset-big.json", "big/valueset-big-circle1.json", "big/valueset-big-circle2.json"],
     "tests" : [
       {
-        "explanation" : "This test is testing that a server can (a) defend itself against a request that is too big and (b) returns the correct response when it does. The test is termed in terms of 1000 codes, but the actual limit doesn't matter as long as it's... big enough (loose definition). With regard to Ontoserver, it has an internal limit far above 1000 codes. That's fine, but we really want to know that if it's actual limit is exceeded, it'll return the correct response. So we add this artificial header to tell Ontoserver to treat 1000 as an internal limit. This way we know that if a real value set exceeds the internal cost limit, however that's determined, the response will be correctly understood",
+        "explanation" : "This test is testing that a server can (a) defend itself against a request that is too big and (b) returns the correct response when it does. The test is built in terms of 1000 codes, but the actual limit doesn't matter as long as it's... big enough (loose definition). With regard to Ontoserver, it has an internal limit far above 1000 codes. That's fine, but we really want to know that if it's actual limit is exceeded, it'll return the correct response. So we add this artificial header to tell Ontoserver to treat 1000 as an internal limit. This way we know that if a real value set exceeds the internal cost limit, however that's determined, the response will be correctly understood",
         "header" : {
           "mode" : "ontoserver",
           "name" : "X-TOO-COSTLY-THRESHOLD",
@@ -3626,7 +3626,7 @@
     "name" : "exclude",
     "mode" : "general",
     "description" : "Tests for proper functioning of exclude",
-    "setup" : [ "exclude/codesystem-exclude.json", "exclude/valueset-exclude.json", "exclude/valueset-exclude-zero.json", "exclude/valueset-exclude-filter.json"],
+    "setup" : [ "exclude/codesystem-exclude.json", "exclude/valueset-exclude.json", "exclude/valueset-exclude-zero.json", "exclude/valueset-exclude-all.json", "exclude/valueset-exclude-filter.json"],
     "tests" : [
       {
         "name" : "exclude-1",
@@ -3648,6 +3648,76 @@
         "operation" : "expand",
         "request" : "exclude/exclude-expand-zero-request.json",
         "response" : "exclude/exclude-expand-zero-response.json"
+      },
+      {
+        "name" : "exclude-all",
+        "description" : "include and exclude all codes",
+        "operation" : "expand",
+        "request" : "exclude/exclude-expand-all-request.json",
+        "response" : "exclude/exclude-expand-all-response.json"
+      },
+      {
+        "name" : "exclude-combo",
+        "description" : "exclude by value set",
+        "operation" : "expand",
+        "request" : "exclude/exclude-expand-combo-request.json",
+        "response" : "exclude/exclude-expand-combo-response.json"
+      },
+      {
+        "name" : "include-combo",
+        "description" : "include limit by value set",
+        "operation" : "expand",
+        "request" : "exclude/include-expand-combo-request.json",
+        "response" : "exclude/include-expand-combo-response.json"
+      }
+    ]
+  },{
+    "name" : "search",
+    "mode" : "general",
+    "description" : "Tests for proper functioning of text search. Note what we're not interested in the implementation of the text search itself, so we only test very obvious results. We're just interested in testing support for the parameter",
+    "setup" : [ "search/codesystem-search.json", "search/valueset-search-all.json", "search/valueset-search-enum.json", "search/valueset-search-filter.json"],
+    "tests" : [
+      {
+        "name" : "search-all-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-all-yes-request.json",
+        "response" : "search/search-expand-all-yes-response.json"
+      },
+      {
+        "name" : "search-all-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-all-no-request.json",
+        "response" : "search/search-expand-all-no-response.json"
+      },
+      {
+        "name" : "search-filter-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-filter-yes-request.json",
+        "response" : "search/search-expand-filter-yes-response.json"
+      },
+      {
+        "name" : "search-filter-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-filter-no-request.json",
+        "response" : "search/search-expand-filter-no-response.json"
+      },
+      {
+        "name" : "search-enum-yes",
+        "description" : "Test a simple search",
+        "operation" : "expand",
+        "request" : "search/search-expand-enum-yes-request.json",
+        "response" : "search/search-expand-enum-yes-response.json"
+      },
+      {
+        "name" : "search-enum-no",
+        "description" : "Test a simple search that returns no results",
+        "operation" : "expand",
+        "request" : "search/search-expand-enum-no-request.json",
+        "response" : "search/search-expand-enum-no-response.json"
       }
     ]
   },{
@@ -4200,6 +4270,36 @@
         "operation" : "expand",
         "request" : "sct/expand-pc-filter-request.json",
         "response" : "sct/expand-pc-filter-response.json"
+      },
+      {
+        "name" : "validate-code-implied-1",
+        "description" : "Check that implied value sets work (isa)",
+        "operation" : "validate-code",
+        "request" : "sct/validate-code-implied-1-request.json",
+        "response" : "sct/validate-code-implied-1-response.json"
+      },
+      {
+        "name" : "validate-code-implied-1b",
+        "description" : "Check that implied value sets work (bad isa)",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "sct/validate-code-implied-1b-request.json",
+        "response" : "sct/validate-code-implied-1b-response.json"
+      },
+      {
+        "name" : "validate-code-implied-2",
+        "description" : "Check that implied value sets work (refset)",
+        "operation" : "validate-code",
+        "request" : "sct/validate-code-implied-2-request.json",
+        "response" : "sct/validate-code-implied-2-response.json"
+      },
+      {
+        "name" : "validate-code-implied-2b",
+        "description" : "Check that implied value sets work (refset)",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "sct/validate-code-implied-2b-request.json",
+        "response" : "sct/validate-code-implied-2b-response.json"
       }
     ]
   },{
